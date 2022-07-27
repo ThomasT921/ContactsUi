@@ -1,0 +1,188 @@
+<div class="modal-body">
+  <div>
+    <section class="modal-section">
+      <h3 *ngIf="scope == 'New'">Add Contact</h3>
+      <h3 *ngIf="scope == 'Update'">Update Contact</h3>
+      <form [formGroup]="contactForm">
+        <div class="col-12 d-flex">
+          <div class="form-group col-md-3">
+            <label class="control-label" for="firstName">First Name:</label>
+            <input
+              formControlName="firstName"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  (contactForm.get('firstName').hasError('required') ||contactForm.get('firstName').hasError('maxlength')) && contactForm.get('firstName').dirty,
+                  firstNamePop
+                )
+              "
+              ngbPopover="{{
+                popOver.displayPopOverMsg('firstName', contactForm)
+              }}"
+              #firstNamePop="ngbPopover"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label class="control-label" for="lastName">Last Name:</label>
+            <input
+              formControlName="lastName"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  (contactForm.get('lastName').hasError('required') ||
+                    contactForm.get('lastName').hasError('maxlength')) &&
+                      contactForm.get('lastName').dirty,
+                  lastNamePop
+                )
+              "
+              ngbPopover="{{
+                popOver.displayPopOverMsg('lastName', contactForm)
+              }}"
+              #lastNamePop="ngbPopover"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label class="control-label" for="email">Email:</label>
+            <input
+              formControlName="email"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  (contactForm.get('email').hasError('required') ||
+                    contactForm.get('email').hasError('email')) &&
+                      contactForm.get('email').dirty,
+                  emailPop
+                )
+              "
+              ngbPopover="{{ popOver.displayPopOverMsg('email', contactForm) }}"
+              #emailPop="ngbPopover"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label class="control-label" for="phone">Phone Number:</label>
+            <input
+              formControlName="phone"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  contactForm.get('phone').hasError('required') &&
+                    contactForm.get('phone').dirty,
+                  phonePop
+                )
+              "
+              ngbPopover="{{ popOver.displayPopOverMsg('phone', contactForm) }}"
+              #phonePop="ngbPopover"
+            />
+          </div>
+        </div>
+        <div class="col-12 d-flex flex-wrap">
+          <div class="form-group col-md-3">
+            <label class="control-label" for="street">Street:</label>
+            <input
+              formControlName="street"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  (contactForm.get('street').hasError('required') ||
+                    contactForm.get('street').hasError('maxlength')) &&
+                      contactForm.get('street').dirty,
+                  streetPop
+                )
+              "
+              ngbPopover="{{
+                popOver.displayPopOverMsg('street', contactForm)
+              }}"
+              #streetPop="ngbPopover"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label class="control-label" for="city">City:</label>
+            <input
+              formControlName="city"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  (contactForm.get('city').hasError('required') ||
+                    contactForm.get('city').hasError('maxlength')) &&
+                      contactForm.get('city').dirty,
+                  cityPop
+                )
+              "
+              ngbPopover="{{ popOver.displayPopOverMsg('city', contactForm) }}"
+              #cityPop="ngbPopover"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label class="control-label" for="zip">ZipCode:</label>
+            <input
+              formControlName="zip"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  contactForm.get('zip').hasError('required') &&
+                    contactForm.get('zip').dirty,
+                  zipPop
+                )
+              "
+              ngbPopover="{{ popOver.displayPopOverMsg('zip', contactForm) }}"
+              #zipPop="ngbPopover"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label class="control-label" for="state">State:</label>
+            <select
+              formControlName="state"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  contactForm.get('state').hasError('required') &&
+                    contactForm.get('state').dirty,
+                  statePop
+                )
+              "
+              ngbPopover="{{ popOver.displayPopOverMsg('state', contactForm) }}"
+              #statePop="ngbPopover"
+            >
+              <option [ngValue]="''">Select...</option>
+              <option *ngFor="let option of states" [value]="option.name">
+                {{ option.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label class="control-label" for="contactFreq"
+              >Contact Frequency:</label
+            >
+            <select
+              formControlName="contactFreq"
+              class="form-control form-control-sm"
+              [ngClass]="
+                popOver.displayPopOver(
+                  contactForm.get('contactFreq').hasError('required') &&
+                    contactForm.get('contactFreq').dirty,
+                  contactFreqPop
+                )
+              "
+              ngbPopover="{{
+                popOver.displayPopOverMsg('contactFreq', contactForm)
+              }}"
+              #contactFreqPop="ngbPopover"
+            >
+              <option *ngFor="let option of freqs" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="button-row">
+          <button class="button btn" [ngClass]="{ 'btn-primary':contactForm.dirty, 'btn-secondary':!contactForm.dirty }" 
+            [disabled]="!contactForm.dirty" (click)="save()">Save</button>
+          <button class="btn btn-primary button" (click)="close()">
+            Close
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+
+<div style="height: inherit;">
+  <div class="d-flex justify-content-end">
+<button ngClass="btn btn-primary"(click)="Add()">Add new Contact</button>
+<button [ngClass]="{ btn:true, 'btn-primary':selectedRows > 0, 'btn-secondary':selectedRows == 0 }" 
+  [disabled]="this.selectedRows == 0"
+  (click)="Update()">Update Contact</button>
+<button [ngClass]="{ btn:true, 'btn-primary':selectedRows > 0, 'btn-secondary':selectedRows == 0 }"  (click)="Delete()" [disabled]="this.selectedRows == 0">Delete Contact</button>
+</div>
+<div style="height: inherit;">
+<ag-grid-angular
+   style="width: 100%; height: 100%"
+   class="ag-theme-alpine"
+   [columnDefs]="columnDefs"
+   [rowData]="contacts"
+   [rowSelection]="'single'"
+   [animateRows]="true"
+   (gridReady)="onGridReady($event)"
+   (cellClicked)="onCellClicked($event)"
+ ></ag-grid-angular>
+</div>
+</div>
